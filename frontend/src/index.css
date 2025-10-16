@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Small global tweak */
+body { @apply bg-bg text-text; }
