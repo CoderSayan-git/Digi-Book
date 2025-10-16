@@ -19,7 +19,10 @@ connectDB();
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Set-Cookie']
 };
 
 // Middleware
@@ -37,9 +40,11 @@ app.use(session({
     touchAfter: 24 * 3600 // Lazy session update - 24 hours
   }),
   cookie: {
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+    secure: true, // Required for cross-domain cookies
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    sameSite: 'none', // Required for cross-domain cookies
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined // Adjust if needed
   }
 }));
 
