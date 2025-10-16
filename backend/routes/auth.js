@@ -72,11 +72,20 @@ router.post('/login', async (req, res) => {
     // Set session
     req.session.userId = user._id;
     req.session.username = user.username;
-
-    res.json({
-      success: true,
-      username: user.username,
-      userId: user._id
+    
+    // Save session before responding
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res.status(500).json({ error: 'Login failed - Session error' });
+      }
+      
+      res.json({
+        success: true,
+        username: user.username,
+        userId: user._id,
+        sessionId: req.session.id
+      });
     });
   } catch (error) {
     console.error('Login error:', error);

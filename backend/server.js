@@ -17,7 +17,19 @@ connectDB();
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      process.env.CORS_ORIGIN,
+      'http://localhost:3000',
+      'http://localhost:5173'
+    ].filter(Boolean);
+    
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -31,6 +43,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Session configuration with MongoDB store
+app.set('trust proxy', 1); // trust first proxy, required for secure cookies
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
   resave: false,
@@ -40,12 +53,13 @@ app.use(session({
     touchAfter: 24 * 3600 // Lazy session update - 24 hours
   }),
   cookie: {
-    secure: true, // Required for cross-domain cookies
+    secure: true,
     httpOnly: true,
-    sameSite: 'none', // Required for cross-domain cookies
+    sameSite: 'none',
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined // Adjust if needed
-  }
+    path: '/'
+  },
+  name: 'sessionId' // Custom cookie name
 }));
 
 // Import routes
