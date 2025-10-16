@@ -1,7 +1,7 @@
 const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 async function request(path, options = {}) {
-  const res = await fetch(path.startsWith('/api') ? path : BASE + path, {
+  const res = await fetch(BASE + path, {
     credentials: 'include',
     headers: { 'Content-Type': 'application/json', ...(options.headers||{}) },
     ...options,
