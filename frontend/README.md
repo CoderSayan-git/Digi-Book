@@ -162,33 +162,96 @@ const API_CONFIG = {
 ## Deployment
 
 For production deployment:
+# DigiBook - Frontend
 
-1. Build a static server or use services like:
-   - Netlify
-   - Vercel
-   - GitHub Pages
-   - AWS S3 + CloudFront
+React + Vite frontend for the DigiBook password & notes manager application. Built with React, Tailwind CSS and Lucide icons.
 
-2. Update `config.js` with production API URL
+## Tech Stack
 
-3. Ensure CORS is properly configured on backend
+- **React** (JSX)
+- **Vite** (dev server & bundler)
+- **Tailwind CSS** (utility-first styling)
+- **Lucide Icons**
+
+## Features
+
+- Modern, responsive UI built with Tailwind
+- Password generator and clipboard copy
+- Secure authentication and session handling
+- CRUD for passwords and notes
+
+## Prerequisites
+
+- Node.js 16+
+- Backend API running on http://localhost:5000
+
+## Installation
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Environment (optional):
+Create a `.env` file in the frontend directory to set the API base URL for Vite:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+3. Start the dev server:
+
+```bash
+npm run dev
+```
+
+By default Vite will serve the app (commonly on `http://localhost:3000` — check the terminal output).
+
+## Scripts
+
+- `npm run dev` — start Vite dev server
+- `npm run build` — build for production
+- `npm run preview` — locally preview production build
+
+## Project Structure
+
+```
+frontend/
+├── index.html
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+├── src/
+│   ├── main.jsx
+│   ├── App.jsx
+│   ├── index.css
+│   └── components/
+│       ├── Auth.jsx
+│       ├── Passwords.jsx
+│       ├── Notes.jsx
+│       └── Generator.jsx
+└── README.md
+```
+
+## Configuration
+
+Set the API base URL using `VITE_API_BASE_URL` (see `.env` example above) or update the API helper in `src/lib/api.js`.
+
+## Development Notes
+
+- The app uses Vite + React — edit files in `src/` and Vite will HMR.
+- Tailwind classes are used throughout. If you change Tailwind config, rebuild the dev server.
+
+## Deployment
+
+- Build with `npm run build` and deploy the generated `dist/` folder to a static host (Netlify, Vercel, etc.).
+- Ensure the backend API URL is set correctly for production.
 
 ## Troubleshooting
 
-### Can't connect to API
-- Check if backend is running on port 5000
-- Check CORS settings in backend
-- Verify API_CONFIG.BASE_URL in config.js
-
-### Session not persisting
-- Ensure `credentials: 'include'` in fetch requests
-- Check browser cookie settings
-- Verify backend session configuration
-
-### Styles not loading
-- Clear browser cache
-- Check browser console for errors
-- Verify styles.css path
+- If the frontend can't reach the backend, verify `VITE_API_BASE_URL` or the API helper.
+- Check browser console and network tab for errors.
 
 ## License
 
@@ -196,4 +259,4 @@ ISC
 
 ## Support
 
-For issues and questions, please check the backend README or create an issue in the repository.
+For backend usage and API details, see the `backend/README.md`.

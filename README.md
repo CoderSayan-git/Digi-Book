@@ -1,9 +1,9 @@
 # Password & Notes Manager
 
-A full-stack web application for securely managing passwords and notes with user authentication. Built with a modern MERN-style architecture using MongoDB, Express.js, and vanilla JavaScript.
-
-## 🌟 Features
-
+ **Framework**: React (Vite)
+ **Styling**: Tailwind CSS
+ **JavaScript**: Modern ESNext (React + JSX)
+ **Dev server**: Vite (`npm run dev`)
 ### 🔐 User Authentication
 - Secure user registration and login
 - Password hashing with bcrypt
@@ -29,13 +29,16 @@ A full-stack web application for securely managing passwords and notes with user
 - Edit and update notes
 - Delete notes
 - User-specific note storage
-
-## 🛠 Tech Stack
-
-### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose ODM
+├── index.html          # Main HTML file (Vite entry)
+├── package.json        # Frontend dependencies & scripts
+├── vite.config.js      # Vite configuration
+├── tailwind.config.js  # Tailwind config
+├── src/                # React source
+│   ├── main.jsx
+│   ├── App.jsx
+│   └── components/     # React components (Auth, Passwords, Notes, Generator, ...)
+├── public/             # Static assets (if any)
+└── README.md
 - **Authentication**: express-session with connect-mongo
 - **Security**: bcryptjs, CORS
 - **Environment**: dotenv
