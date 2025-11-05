@@ -40,8 +40,8 @@ export function Auth({ onAuthenticated }) {
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-purple-700 to-pink-600">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-white/20 shadow-sm">
-        <div className="container-fluid px-6 lg:px-12 py-3">
-          <div className="flex justify-between items-center">
+        <div className="container-fluid px-6 lg:px-12 py-6">
+          <div className="flex justify-between items-center ml-16 mr-16">
             <h1 className="text-2xl font-bold text-primary-600 flex items-center gap-2">
               <div className="bg-gradient-to-r from-primary-500 to-primary-600 p-2 rounded-lg shadow-md">
                 <ShieldCheck className="text-white h-6 w-6" />
