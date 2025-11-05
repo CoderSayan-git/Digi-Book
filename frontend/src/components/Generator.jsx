@@ -27,7 +27,8 @@ export function Generator() {
   }
 
   return (
-    <div className="bg-bg-light rounded-xl shadow-card hover:shadow-cardHover transition-shadow p-6 max-w-2xl">
+    <div className="flex justify-center w-full">
+      <div className="bg-bg-light rounded-xl shadow-card hover:shadow-cardHover transition-shadow p-6 max-w-2xl w-full mx-4">
       <h2 className="text-xl font-semibold mb-4 text-text">Password Generator</h2>
 
       <div className="flex gap-2 mb-4">
@@ -52,6 +53,7 @@ export function Generator() {
         <button onClick={generate} className="flex-1 py-2 rounded-md bg-primary-500 text-text-inverted hover:bg-primary-600 transition-colors">Generate</button>
         <button onClick={save} className="flex-1 py-2 rounded-md bg-success-500 text-text-inverted hover:bg-success-600 transition-colors">Save to Passwords</button>
       </div>
+    </div>
     </div>
   )
 }

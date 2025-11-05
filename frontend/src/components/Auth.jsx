@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ShieldCheck } from 'lucide-react'
 import { api } from '../lib/api'
 
 export function Auth({ onAuthenticated }) {
@@ -41,7 +42,12 @@ export function Auth({ onAuthenticated }) {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-white/20 shadow-sm">
         <div className="container-fluid px-6 lg:px-12 py-3">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-primary-700">DigiBook</h1>
+            <h1 className="text-2xl font-bold text-primary-600 flex items-center gap-2">
+              <div className="bg-gradient-to-r from-primary-500 to-primary-600 p-2 rounded-lg shadow-md">
+                <ShieldCheck className="text-white h-6 w-6" />
+              </div>
+              DigiBook
+            </h1>
             <div className="flex gap-2">
               <button
                 onClick={() => { setTab('login'); setShowAuthModal(true) }}
@@ -63,7 +69,7 @@ export function Auth({ onAuthenticated }) {
       {/* Hero Section */}
       <div className="pt-[72px]">
         <div className="container-fluid px-6 lg:px-12 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-[90%] mx-auto">
             <div>
               <h1 className="text-5xl font-semibold text-white mb-6">
                 Your Digital Space for <br/>
@@ -112,7 +118,7 @@ export function Auth({ onAuthenticated }) {
       </div>
 
       {/* Features Section */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600">
+      <div className=" relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/10 via-transparent to-black/10"></div>
           <div className="absolute -bottom-1/2 -right-1/2 w-[100%] h-[100%] rounded-full bg-gradient-to-t from-purple-500/30 to-transparent blur-3xl"></div>
@@ -120,7 +126,7 @@ export function Auth({ onAuthenticated }) {
         </div>
         <div className="container-fluid px-6 lg:px-12 py-24 relative">
           <h2 className="text-4xl font-semibold text-center mb-16 text-white">Why Choose DigiBook?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[90%] mx-auto">
             <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-lg transition-all hover:bg-white/90">
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                 <svg className="w-8 h-8 text-primary-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,14 +159,14 @@ export function Auth({ onAuthenticated }) {
       </div>
 
       {/* How it Works */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600">
+      <div className=" relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600">
         <div className="absolute inset-0">
           <div className="absolute -top-1/2 -left-1/2 w-[100%] h-[100%] rounded-full bg-gradient-to-b from-indigo-500/30 to-transparent blur-3xl"></div>
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2720%27 height=%2720%27 viewBox=%270 0 20 20%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27%23fff%27 fill-opacity=%270.05%27 fill-rule=%27evenodd%27%3E%3Ccircle cx=%273%27 cy=%273%27 r=%273%27/%3E%3Ccircle cx=%2713%27 cy=%2713%27 r=%273%27/%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
         </div>
         <div className="container-fluid px-6 lg:px-12 py-24 relative">
           <h2 className="text-4xl font-semibold text-center mb-16 text-white">How DigiBook Works</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[90%] mx-auto">
             <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-md hover:shadow-lg transition-all hover:bg-white/90">
               <div className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center text-xl font-semibold mb-6 shadow-lg">1</div>
               <h3 className="text-xl font-semibold mb-4 text-gray-900">Sign Up</h3>
@@ -189,16 +195,16 @@ export function Auth({ onAuthenticated }) {
       </div>
 
       {/* Testimonials */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600">
+      <div className=" relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600">
         <div className="absolute inset-0">
           <div className="absolute -bottom-1/2 right-0 w-[80%] h-[80%] rounded-full bg-gradient-to-t from-pink-500/30 to-transparent blur-3xl"></div>
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2720%27 height=%2720%27 viewBox=%270 0 20 20%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27%23fff%27 fill-opacity=%270.05%27 fill-rule=%27evenodd%27%3E%3Ccircle cx=%273%27 cy=%273%27 r=%273%27/%3E%3Ccircle cx=%2713%27 cy=%2713%27 r=%273%27/%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
         </div>
         <div className="container-fluid px-6 lg:px-12 py-24 relative">
           <h2 className="text-4xl font-semibold text-center mb-16 text-white">What Our Users Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
-              <div className="flex items-center mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[90%] mx-auto">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
+              <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full shadow-inner"></div>
                 <div className="ml-4">
                   <h4 className="font-semibold text-gray-900">Sujay Rana</h4>
@@ -207,25 +213,35 @@ export function Auth({ onAuthenticated }) {
               </div>
               <p className="text-gray-600">"DigiBook has revolutionized how I manage my passwords. It's intuitive, secure, and gives me peace of mind."</p>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
-              <div className="flex items-center mb-6">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
+              <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full shadow-inner"></div>
                 <div className="ml-4">
                   <h4 className="font-semibold text-gray-900">Sayak Das</h4>
-                  <p className="text-gray-600 text-sm">Software Developer</p>
+                  <p className="text-gray-600 text-sm">College Student</p>
                 </div>
               </div>
               <p className="text-gray-600">"The note-taking feature is fantastic. I can securely store sensitive information and access it from anywhere."</p>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
-              <div className="flex items-center mb-6">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
+              <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full shadow-inner"></div>
                 <div className="ml-4">
                   <h4 className="font-semibold text-gray-900">Soukarya Chaulia</h4>
-                  <p className="text-gray-600 text-sm">Small Business Owner</p>
+                  <p className="text-gray-600 text-sm">College Student</p>
                 </div>
               </div>
               <p className="text-gray-600">"DigiBook's password generator has helped me create strong passwords for all my accounts. It's a game-changer!"</p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:bg-white/90">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full shadow-inner"></div>
+                <div className="ml-4">
+                  <h4 className="font-semibold text-gray-900">Arnab Chakraborty</h4>
+                  <p className="text-gray-600 text-sm">College Student</p>
+                </div>
+              </div>
+              <p className="text-gray-600">"As someone who manages multiple accounts, DigiBook's organization features and secure storage have been invaluable."</p>
             </div>
           </div>
         </div>
@@ -284,27 +300,25 @@ export function Auth({ onAuthenticated }) {
               ✕
             </button>
             
-            <div className="flex gap-2 mb-6">
-              <button
-                onClick={() => setTab('login')}
-                className={`flex-1 py-2 rounded-md border transition-colors ${
-                  tab === 'login'
-                    ? 'bg-primary-500 text-text-inverted border-primary-500 hover:bg-primary-600'
-                    : 'border-secondary-200 text-text hover:bg-secondary-50'
-                }`}
-              >
-                Login
-              </button>
-              <button
-                onClick={() => setTab('register')}
-                className={`flex-1 py-2 rounded-md border transition-colors ${
-                  tab === 'register'
-                    ? 'bg-primary-500 text-text-inverted border-primary-500 hover:bg-primary-600'
-                    : 'border-secondary-200 text-text hover:bg-secondary-50'
-                }`}
-              >
-                Register
-              </button>
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900">{tab === 'login' ? 'Login' : 'Create Account'}</h2>
+              <p className="text-gray-600 mt-2">
+                {tab === 'login' ? (
+                  <>
+                    Don't have an account?{' '}
+                    <button onClick={() => setTab('register')} className="text-primary-600 hover:text-primary-700 font-medium">
+                      Register
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    Already have an account?{' '}
+                    <button onClick={() => setTab('login')} className="text-primary-600 hover:text-primary-700 font-medium">
+                      Login
+                    </button>
+                  </>
+                )}
+              </p>
             </div>
 
             {error && (
