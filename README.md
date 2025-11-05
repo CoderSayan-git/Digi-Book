@@ -2,10 +2,6 @@
 
 A secure, modern web application for managing passwords and personal notes with strong encryption and user authentication. Built with React and Node.js, it offers an intuitive interface for storing sensitive information safely.
 
- **Framework**: React (Vite)
- **Styling**: Tailwind CSS
- **JavaScript**: Modern ESNext (React + JSX)
- **Dev server**: Vite (`npm run dev`)
 ### 🔐 User Authentication
 - Secure user registration and login
 - Password hashing with bcrypt
