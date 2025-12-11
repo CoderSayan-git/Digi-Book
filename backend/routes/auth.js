@@ -6,12 +6,18 @@ const User = require('../models/User');
 // @desc    Register a new user
 // @access  Public
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // Validation
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Please provide username and password' });
+    if (!username || !email || !password) {
+      return res.status(400).json({ error: 'Please provide username, email, and password' });
+    }
+
+    // Email validation
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Please provide a valid email address' });
     }
 
     if (password.length < 8) {
@@ -37,15 +43,16 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Password must contain at least one symbol (!@#$%^&*...)' });
     }
 
-    // Check if user already exists
-    const userExists = await User.findOne({ username });
-    if (userExists) {
-      return res.status(400).json({ error: 'Username already exists' });
+    // Check if email already exists
+    const emailExists = await User.findOne({ email });
+    if (emailExists) {
+      return res.status(400).json({ error: 'Email already registered' });
     }
 
     // Create user
     const user = await User.create({
       username,
+      email,
       password
     });
 

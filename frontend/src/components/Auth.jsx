@@ -25,11 +25,12 @@ export function Auth({ onAuthenticated }) {
     e.preventDefault()
     setLoading(true); setError('')
     const username = e.target.username.value
+    const email = e.target.email.value
     const password = e.target.password.value
     const confirm = e.target.confirm.value
     if (password !== confirm) { setError('Passwords do not match'); setLoading(false); return }
     try {
-      const res = await api.auth.register({ username, password })
+      const res = await api.auth.register({ username, email, password })
       onAuthenticated(res.username)
     } catch (err) {
       setError(err.message || 'Registration failed.')
@@ -356,6 +357,15 @@ export function Auth({ onAuthenticated }) {
                   <input
                     name="username"
                     minLength={3}
+                    className="w-full border-2 border-secondary-200 rounded-md p-2 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1 text-text">Email</label>
+                  <input
+                    type="email"
+                    name="email"
                     className="w-full border-2 border-secondary-200 rounded-md p-2 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
                     required
                   />
