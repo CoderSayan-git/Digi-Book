@@ -3,16 +3,18 @@
 A secure, modern web application for managing passwords and personal notes with strong encryption and user authentication. Built with React and Node.js, it offers an intuitive interface for storing sensitive information safely.
 
 ### 🔐 User Authentication
-- Secure user registration and login
-- Password hashing with bcrypt
+- Secure user registration with email and username
+- Strong password requirements (8+ chars, uppercase, lowercase, digit, symbol)
+- Password hashing with bcrypt (10 salt rounds)
 - Session-based authentication with MongoDB store
 - Automatic session management
 
 ### 🔑 Password Management
-- Save passwords with titles and descriptions
+- Save passwords with titles, URLs, and descriptions
+- AES-256-GCM encryption for all stored passwords
 - View saved passwords with toggle visibility
 - Edit and delete passwords
-- User-specific password storage
+- User-specific password storage with encryption
 
 ### ⚙️ Password Generator
 - Generate strong random passwords
@@ -34,51 +36,75 @@ A secure, modern web application for managing passwords and personal notes with 
 ├── src/                # React source
 │   ├── main.jsx
 │   ├── App.jsx
-│   └── components/     # React components (Auth, Passwords, Notes, Generator, ...)
-├── public/             # Static assets (if any)
+│   ├── index.css
+│   ├── components/     # React components (Auth, Passwords, Notes, Generator, Logo)
+│   └── lib/            # API utilities
+├── public/             # Static assets (favicon.svg)
 └── README.md
+
+### Backend
+- **Framework**: Express.js
+- **Database**: MongoDB with Mongoose
 - **Authentication**: express-session with connect-mongo
-- **Security**: bcryptjs, CORS
+- **Security**: bcryptjs (password hashing), AES-256-GCM (password encryption), CORS
 - **Environment**: dotenv
 
 ### Frontend
-- **HTML5**: Semantic markup
-- **CSS3**: Modern responsive design
-- **JavaScript**: Vanilla ES6+
-- **Server**: http-server for development
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **HTTP Client**: Fetch API
 
 ## 📁 Project Structure
 
 ```
-Password Generator/
+Digi-Book/
 ├── backend/                 # Backend API
 │   ├── config/
 │   │   └── database.js     # MongoDB connection
 │   ├── middleware/
 │   │   └── auth.js         # Authentication middleware
 │   ├── models/
-│   │   ├── User.js         # User model
-│   │   ├── Password.js     # Password model
+│   │   ├── User.js         # User model (with email)
+│   │   ├── Password.js     # Password model (with encryption)
 │   │   └── Note.js         # Note model
 │   ├── routes/
-│   │   ├── auth.js         # Auth routes
+│   │   ├── auth.js         # Auth routes (login, register, logout)
 │   │   ├── passwords.js    # Password routes
 │   │   └── notes.js        # Note routes
+│   ├── utils/
+│   │   └── encryption.js   # AES-256-GCM encryption utilities
 │   ├── .env                # Environment variables
 │   ├── .gitignore
 │   ├── package.json
 │   ├── server.js           # Main server file
 │   └── README.md
 │
-├── frontend/                # Frontend UI
-│   ├── app.js              # Main application logic
-│   ├── config.js           # API configuration
-│   ├── index.html          # Main HTML file
-│   ├── styles.css          # Styling
+├── frontend/                # Frontend UI (React + Vite)
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Auth.jsx    # Authentication component
+│   │   │   ├── Passwords.jsx # Password manager
+│   │   │   ├── Notes.jsx   # Notes manager
+│   │   │   ├── Generator.jsx # Password generator
+│   │   │   └── Logo.jsx    # Custom logo component
+│   │   ├── lib/
+│   │   │   └── api.js      # API client
+│   │   ├── App.jsx         # Main app component
+│   │   ├── main.jsx        # Entry point
+│   │   └── index.css       # Global styles
+│   ├── public/
+│   │   └── favicon.svg     # Custom favicon
+│   ├── index.html          # HTML entry point
+│   ├── vite.config.js      # Vite configuration
+│   ├── tailwind.config.js  # Tailwind configuration
+│   ├── postcss.config.js   # PostCSS configuration
 │   ├── .gitignore
 │   ├── package.json
 │   └── README.md
 │
+├── .gitignore              # Root gitignore
 └── README.md               # This file
 ```
 
@@ -125,6 +151,7 @@ npm install
 # Edit .env file with your settings:
 # - Update MONGODB_URI if using Atlas or custom setup
 # - Change SESSION_SECRET for production
+# - Change ENCRYPTION_KEY for production (used for password encryption)
 
 # Start the backend server
 npm start
@@ -146,11 +173,11 @@ cd frontend
 # Install dependencies
 npm install
 
-# Start the frontend server
-npm start
+# Start the Vite development server
+npm run dev
 ```
 
-The frontend will start on **http://localhost:3000**
+The frontend will start on **http://localhost:5173** (Vite default port)
 
 #### 4. Access the Application
 
@@ -175,22 +202,26 @@ Open your browser and go to: **http://localhost:3000**
 
 4. **Open your browser and navigate to:**
    ```
-   http://localhost:3000
+   http://localhost:5173
    ```
 
 ### First Time Setup
-1. Open http://localhost:3000
-2. Click "Register" tab
-3. Create an account (username: min 3 chars, password: min 6 chars)
+1. Open http://localhost:5173
+2. Click "Register" button
+3. Create an account:
+   - Username: min 3 characters
+   - Email: valid email address
+   - Password: min 8 characters with uppercase, lowercase, digit, and symbol
 4. You'll be automatically logged in
 
 ### Managing Passwords
 1. Navigate to "Passwords" tab
 2. Click "+ Add Password"
-3. Fill in title, password, and optional description
-4. Click "Save"
+3. Fill in title, password, URL (optional), and description (optional)
+4. Click "Save" (passwords are automatically encrypted)
 5. Use eye icon to show/hide passwords
-6. Edit or delete using the buttons
+6. Click copy icon to copy password to clipboard
+7. Edit or delete using the buttons
 
 ### Generating Passwords
 1. Navigate to "Password Generator" tab
@@ -234,22 +265,25 @@ Open your browser and go to: **http://localhost:3000**
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/password-notes-db
 SESSION_SECRET=your-secret-key
-CORS_ORIGIN=http://localhost:3000
+ENCRYPTION_KEY=your-encryption-key-32-chars-hex
+CORS_ORIGIN=http://localhost:5173
 NODE_ENV=development
 ```
 
-### Frontend (config.js)
-```javascript
-const API_CONFIG = {
-  BASE_URL: 'http://localhost:5000',
-  // ... endpoints
-};
+### Frontend (.env - optional)
+```env
+VITE_API_BASE_URL=http://localhost:5000
 ```
+
+Note: If not set, defaults to `http://localhost:5000`
 
 ## 🔒 Security Features
 
-- Password hashing with bcrypt (10 salt rounds)
-- Session-based authentication
+- **User passwords**: Hashed with bcrypt (10 salt rounds)
+- **Saved passwords**: Encrypted with AES-256-GCM
+- **Strong password policy**: 8+ chars with uppercase, lowercase, digit, and symbol
+- **Email validation**: Proper email format required
+- Session-based authentication with MongoDB store
 - HTTP-only cookies
 - CORS protection
 - User-specific data isolation
@@ -273,8 +307,9 @@ const API_CONFIG = {
 
 ### Frontend can't connect to backend
 - Check if backend is running on port 5000
-- Verify API_CONFIG.BASE_URL in frontend/config.js
-- Check CORS settings in backend
+- Verify `VITE_API_BASE_URL` in frontend (defaults to http://localhost:5000)
+- Check CORS settings in backend (should allow http://localhost:5173)
+- Check browser console for CORS errors
 
 ### Session not persisting
 - Clear browser cookies
@@ -292,7 +327,7 @@ npm run dev  # Auto-reload with nodemon
 ### Frontend Development
 ```bash
 cd frontend
-npm start  # Serves on port 3000
+npm run dev  # Vite dev server on port 5173
 ```
 
 ## 🌐 Production Deployment
@@ -306,9 +341,10 @@ npm start  # Serves on port 3000
 - Change `SESSION_SECRET` to a strong random value
 
 ### Frontend Deployment
-- Use services like: Netlify, Vercel, GitHub Pages
-- Update `config.js` with production API URL
-- Ensure CORS is configured for production domain
+- Build the app: `npm run build` (creates `dist/` folder)
+- Use services like: Netlify, Vercel, GitHub Pages, Cloudflare Pages
+- Set `VITE_API_BASE_URL` environment variable to production API URL
+- Ensure CORS is configured for production domain in backend
 
 ## 📦 Future Enhancements
 
