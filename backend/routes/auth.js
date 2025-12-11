@@ -75,24 +75,25 @@ router.post('/register', async (req, res) => {
 // @desc    Login user
 // @access  Public
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     // Validation
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Please provide username and password' });
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Please provide email and password' });
     }
 
-    // Check if user exists
-    const user = await User.findOne({ username });
+    // Check if user exists by email
+    const user = await User.findOne({ email: email.toLowerCase() });
+    
     if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Check password
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     // Set session

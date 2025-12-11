@@ -11,10 +11,10 @@ export function Auth({ onAuthenticated }) {
   async function handleLogin(e) {
     e.preventDefault()
     setLoading(true); setError('')
-    const username = e.target.username.value
+    const email = e.target.email.value
     const password = e.target.password.value
     try {
-      const res = await api.auth.login({ username, password })
+      const res = await api.auth.login({ email, password })
       onAuthenticated(res.username)
     } catch (err) {
       setError(err.message || 'Login failed.')
@@ -327,9 +327,11 @@ export function Auth({ onAuthenticated }) {
             {tab === 'login' ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1 text-text">Username</label>
+                  <label className="block text-sm font-medium mb-1 text-text">Email</label>
                   <input
-                    name="username"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
                     className="w-full border-2 border-secondary-200 rounded-md p-2 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
                     required
                   />
