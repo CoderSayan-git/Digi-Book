@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { encrypt, decrypt } = require('../utils/encryption');
 
 const passwordSchema = new mongoose.Schema({
   user: {
@@ -36,10 +37,57 @@ const passwordSchema = new mongoose.Schema({
   }
 });
 
-// Update the updatedAt timestamp before saving
+// Encrypt password before saving
 passwordSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
+  
+  // Only encrypt if password field is modified
+  if (this.isModified('password')) {
+    try {
+      this.password = encrypt(this.password);
+    } catch (error) {
+      return next(error);
+    }
+  }
+  
   next();
+});
+
+// Decrypt password after finding
+passwordSchema.post('find', function(docs) {
+  if (docs && docs.length > 0) {
+    docs.forEach(doc => {
+      if (doc.password) {
+        try {
+          doc.password = decrypt(doc.password);
+        } catch (error) {
+          console.error('Decryption error for document:', doc._id);
+        }
+      }
+    });
+  }
+});
+
+// Decrypt password after findOne
+passwordSchema.post('findOne', function(doc) {
+  if (doc && doc.password) {
+    try {
+      doc.password = decrypt(doc.password);
+    } catch (error) {
+      console.error('Decryption error for document:', doc._id);
+    }
+  }
+});
+
+// Decrypt password after findOneAndUpdate
+passwordSchema.post('findOneAndUpdate', function(doc) {
+  if (doc && doc.password) {
+    try {
+      doc.password = decrypt(doc.password);
+    } catch (error) {
+      console.error('Decryption error for document:', doc._id);
+    }
+  }
 });
 
 module.exports = mongoose.model('Password', passwordSchema);

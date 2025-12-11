@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { ShieldCheck } from 'lucide-react'
 import { api } from '../lib/api'
+import { Logo } from './Logo'
 
 export function Auth({ onAuthenticated }) {
   const [showAuthModal, setShowAuthModal] = useState(false)
@@ -43,10 +43,8 @@ export function Auth({ onAuthenticated }) {
         <div className="container-fluid px-6 lg:px-12 py-6">
           <div className="flex justify-between items-center ml-16 mr-16">
             <h1 className="text-2xl font-bold text-primary-600 flex items-center gap-2">
-              <div className="bg-gradient-to-r from-primary-500 to-primary-600 p-2 rounded-lg shadow-md">
-                <ShieldCheck className="text-white h-6 w-6" />
-              </div>
-              DigiBook
+              <Logo className="w-10 h-10" variant="light" />
+              Digi-Book
             </h1>
             <div className="flex gap-2">
               <button

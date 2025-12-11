@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { LogOut, KeyRound, NotebookPen, Cog, Eye, EyeOff, Plus, Pencil, Trash2, Copy, ShieldCheck } from 'lucide-react'
+import { LogOut, KeyRound, NotebookPen, Cog, Eye, EyeOff, Plus, Pencil, Trash2, Copy } from 'lucide-react'
 import { api } from './lib/api'
 import { Auth } from './components/Auth'
 import { Passwords } from './components/Passwords'
 import { Notes } from './components/Notes'
 import { Generator } from './components/Generator'
+import { Logo } from './components/Logo'
 
 export default function App() {
   const [auth, setAuth] = useState({ authenticated: false, username: '' })
@@ -35,9 +36,7 @@ export default function App() {
         <header className="bg-white/80 backdrop-blur-md shadow-sm px-6 py-4 border-b border-white/20">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <h1 className="text-2xl font-bold text-primary-600 flex items-center gap-2">
-              <div className="bg-gradient-to-r from-primary-500 to-primary-600 p-2 rounded-lg shadow-md">
-                <ShieldCheck className="text-white h-6 w-6" />
-              </div>
+              <Logo className="w-10 h-10" variant="light" />
               Digi-Book
             </h1>
             <div className="flex items-center gap-4">
