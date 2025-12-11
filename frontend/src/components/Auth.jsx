@@ -365,10 +365,13 @@ export function Auth({ onAuthenticated }) {
                   <input
                     type="password"
                     name="password"
-                    minLength={6}
+                    minLength={8}
                     className="w-full border-2 border-secondary-200 rounded-md p-2 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
                     required
                   />
+                  <p className="text-xs text-secondary-600 mt-1">
+                    Must be 8+ characters with uppercase, lowercase, digit, and symbol (!@#$%...)
+                  </p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1 text-text">
@@ -377,7 +380,7 @@ export function Auth({ onAuthenticated }) {
                   <input
                     type="password"
                     name="confirm"
-                    minLength={6}
+                    minLength={8}
                     className="w-full border-2 border-secondary-200 rounded-md p-2 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 bg-white"
                     required
                   />

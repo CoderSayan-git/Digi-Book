@@ -14,8 +14,27 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Please provide username and password' });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters' });
+    }
+
+    // Password strength validation
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasDigit = /\d/.test(password);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (!hasUppercase) {
+      return res.status(400).json({ error: 'Password must contain at least one uppercase letter' });
+    }
+    if (!hasLowercase) {
+      return res.status(400).json({ error: 'Password must contain at least one lowercase letter' });
+    }
+    if (!hasDigit) {
+      return res.status(400).json({ error: 'Password must contain at least one digit' });
+    }
+    if (!hasSymbol) {
+      return res.status(400).json({ error: 'Password must contain at least one symbol (!@#$%^&*...)' });
     }
 
     // Check if user already exists
