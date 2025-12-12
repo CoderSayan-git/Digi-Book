@@ -113,8 +113,8 @@ function PasswordModal({ initial, onClose, onSaved }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 mt-0">
-      <div className="bg-white rounded-xl shadow-cardLg w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/60 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-cardLg w-full max-w-lg p-6 my-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-text flex items-center gap-2">
             {initial ? (

@@ -26,7 +26,7 @@ export function Notes() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-text">My Notes</h2>
-        <button onClick={onAdd} className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors active:scale-95">
+        <button onClick={onAdd} className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors active:scale-95">
           <Plus size={18} /> Add Note
         </button>
       </div>
@@ -73,8 +73,8 @@ function NoteModal({ initial, onClose, onSaved }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 mt-0">
-      <div className="bg-white rounded-xl shadow-cardLg w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/60 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-cardLg w-full max-w-lg p-6 my-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-text">{initial ? 'Edit Note' : 'Add Note'}</h3>
           <button onClick={onClose} className="text-secondary-500 hover:text-secondary-700 transition-colors">✕</button>

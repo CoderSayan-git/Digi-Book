@@ -65,7 +65,7 @@ export default function App() {
       </div>
 
       <main className="max-w-3xl mx-auto p-6">
-        <div className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6">
+        <div className={`bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6 ${view !== 'generator' ? 'min-h-[calc(100vh-180px)]' : ''}`}>
           {view === 'passwords' && <Passwords />}
           {view === 'notes' && <Notes />}
           {view === 'generator' && <Generator />}
