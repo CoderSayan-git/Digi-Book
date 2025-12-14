@@ -3,58 +3,89 @@
 A secure, modern web application for managing passwords and personal notes with strong encryption and user authentication. Built with React and Node.js, it offers an intuitive interface for storing sensitive information safely.
 
 ### 🔐 User Authentication
-- Secure user registration with email and username
-- Strong password requirements (8+ chars, uppercase, lowercase, digit, symbol)
+- Secure user registration with email and username validation
+- Strong password requirements:
+  - Minimum 8 characters
+  - At least one uppercase letter
+  - At least one lowercase letter
+  - At least one digit
+  - At least one symbol (!@#$%^&*...)
 - Password hashing with bcrypt (10 salt rounds)
-- Session-based authentication with MongoDB store
-- Automatic session management
+- Session-based authentication with MongoDB store (connect-mongo)
+- 24-hour session persistence
+- HTTP-only cookies with secure settings for production
+- Auto-logout functionality
 
 ### 🔑 Password Management
-- Save passwords with titles, URLs, and descriptions
-- AES-256-GCM encryption for all stored passwords
-- View saved passwords with toggle visibility
-- Edit and delete passwords
-- User-specific password storage with encryption
+- Save passwords with titles, URLs (optional), and descriptions (optional)
+- Automatic AES-256-GCM encryption for all stored passwords
+- Toggle password visibility with eye icon
+- Copy passwords to clipboard
+- Edit and update existing passwords
+- Delete passwords
+- User-specific password isolation (users only see their own passwords)
+- Automatic timestamp tracking (createdAt, updatedAt)
 
 ### ⚙️ Password Generator
 - Generate strong random passwords
 - Customizable options:
   - Length (8-32 characters)
-  - Include/exclude uppercase, lowercase, numbers, symbols
-- Copy to clipboard
-- Save directly to password collection
+  - Include/exclude uppercase letters
+  - Include/exclude lowercase letters
+  - Include/exclude numbers
+  - Include/exclude symbols
+- Copy to clipboard functionality
+- Save directly to password vault
 
 ### 📝 Notes Management
-- Create and organize personal notes
-- Edit and update notes
+- Create personal notes with title and content
+- Edit and update existing notes
 - Delete notes
-- User-specific note storage
+- User-specific note storage (users only see their own notes)
+- Maximum 200 characters for titles
+- Maximum 10,000 characters for content
+- Automatic timestamp tracking (createdAt, updatedAt)
 ├── index.html          # Main HTML file (Vite entry)
 ├── package.json        # Frontend dependencies & scripts
-├── vite.config.js      # Vite configuration
+├── vite.config.js      # Vite configuration (port 3000)
 ├── tailwind.config.js  # Tailwind config
+├── postcss.config.js   # PostCSS configuration
+├── vercel.json         # Vercel deployment config
 ├── src/                # React source
-│   ├── main.jsx
-│   ├── App.jsx
-│   ├── index.css
-│   ├── components/     # React components (Auth, Passwords, Notes, Generator, Logo)
+│   ├── main.jsx        # Entry point
+│   ├── App.jsx         # Main app component with routing
+│   ├── index.css       # Global styles with Tailwind
+│   ├── components/     # React components
+│   │   ├── Auth.jsx    # Login/Register component
+│   │   ├── Passwords.jsx # Password manager component
+│   │   ├── Notes.jsx   # Notes manager component
+│   │   ├── Generator.jsx # Password generator component
+│   │   └── Logo.jsx    # Custom logo component
 │   └── lib/            # API utilities
-├── public/             # Static assets (favicon.svg)
+│       └── api.js      # API client with fetch
+├── public/             # Static assets
+│   └── favicon.svg     # Custom favicon
 └── README.md
 
 ### Backend
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose
-- **Authentication**: express-session with connect-mongo
-- **Security**: bcryptjs (password hashing), AES-256-GCM (password encryption), CORS
-- **Environment**: dotenv
+- **Framework**: Express.js 4.18+
+- **Database**: MongoDB with Mongoose 8.0+
+- **Authentication**: express-session 1.17+ with connect-mongo 5.1+
+- **Security**: 
+  - bcryptjs 2.4+ (user password hashing with 10 salt rounds)
+  - AES-256-GCM (stored password encryption using crypto module)
+  - CORS 2.8+ (cross-origin resource sharing)
+- **Middleware**: body-parser 1.20+
+- **Environment**: dotenv 16.3+
 
 ### Frontend
-- **Framework**: React 18
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **HTTP Client**: Fetch API
+- **Framework**: React 18.3+
+- **Build Tool**: Vite 5.4+ (configured for port 3000)
+- **Styling**: Tailwind CSS 3.4+ with PostCSS and Autoprefixer
+- **Icons**: Lucide React 0.473+
+- **Utilities**: clsx 2.1+ (conditional class names)
+- **HTTP Client**: Native Fetch API
+- **UI Features**: Gradient backgrounds, backdrop blur, responsive design
 
 ## 📁 Project Structure
 
@@ -177,7 +208,7 @@ npm install
 npm run dev
 ```
 
-The frontend will start on **http://localhost:5173** (Vite default port)
+The frontend will start on **http://localhost:3000**
 
 #### 4. Access the Application
 
@@ -202,11 +233,11 @@ Open your browser and go to: **http://localhost:3000**
 
 4. **Open your browser and navigate to:**
    ```
-   http://localhost:5173
+   http://localhost:3000
    ```
 
 ### First Time Setup
-1. Open http://localhost:5173
+1. Open http://localhost:3000
 2. Click "Register" button
 3. Create an account:
    - Username: min 3 characters
@@ -239,10 +270,11 @@ Open your browser and go to: **http://localhost:3000**
 ## 🔌 API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `POST /api/auth/logout` - Logout user
-- `GET /api/auth/status` - Check auth status
+- `POST /api/auth/register` - Register new user (email, username, password)
+- `POST /api/auth/login` - Login user (email, password)
+- `POST /api/auth/logout` - Logout user and destroy session
+- `GET /api/auth/status` - Check authentication status
+- `GET /api/health` - Server health check
 
 ### Passwords
 - `GET /api/passwords` - Get all passwords
@@ -264,11 +296,16 @@ Open your browser and go to: **http://localhost:3000**
 ```env
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/password-notes-db
-SESSION_SECRET=your-secret-key
+SESSION_SECRET=your-secret-key-change-this
 ENCRYPTION_KEY=your-encryption-key-32-chars-hex
-CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=http://localhost:3000
 NODE_ENV=development
 ```
+
+**Important Notes:**
+- `ENCRYPTION_KEY`: Must be a 64-character hex string (32 bytes). Use `crypto.randomBytes(32).toString('hex')` to generate one
+- `SESSION_SECRET`: Change this to a strong random value for production
+- `CORS_ORIGIN`: Set to your frontend URL (defaults support both 3000 and 5173)
 
 ### Frontend (.env - optional)
 ```env
@@ -279,16 +316,36 @@ Note: If not set, defaults to `http://localhost:5000`
 
 ## 🔒 Security Features
 
-- **User passwords**: Hashed with bcrypt (10 salt rounds)
-- **Saved passwords**: Encrypted with AES-256-GCM
-- **Strong password policy**: 8+ chars with uppercase, lowercase, digit, and symbol
-- **Email validation**: Proper email format required
-- Session-based authentication with MongoDB store
-- HTTP-only cookies
-- CORS protection
-- User-specific data isolation
-- Input validation on both frontend and backend
-- XSS protection via HTML escaping
+### Authentication Security
+- **User password hashing**: bcrypt with 10 salt rounds
+- **Strong password policy enforcement**:
+  - Minimum 8 characters
+  - Must include uppercase letter
+  - Must include lowercase letter
+  - Must include digit
+  - Must include special symbol
+- **Email validation**: Regex validation for proper email format
+- **Session-based authentication**: express-session with MongoDB store
+- **Secure session cookies**:
+  - HTTP-only (prevents XSS attacks)
+  - Secure flag in production (HTTPS only)
+  - SameSite protection (CSRF prevention)
+  - 24-hour expiration
+  - Custom cookie name for security
+
+### Data Encryption
+- **Stored passwords**: AES-256-GCM encryption
+  - Unique IV (Initialization Vector) for each password
+  - Authentication tags to detect tampering
+  - PBKDF2 key derivation (100,000 iterations)
+  - Automatic encryption on save, decryption on retrieval
+
+### Application Security
+- **CORS protection**: Whitelist-based origin validation
+- **User data isolation**: Users can only access their own data
+- **Input validation**: Server-side validation for all inputs
+- **Error handling**: Prevents information leakage
+- **Trust proxy**: Configured for secure cookies behind proxies
 
 ## 🚨 Troubleshooting
 
@@ -308,8 +365,9 @@ Note: If not set, defaults to `http://localhost:5000`
 ### Frontend can't connect to backend
 - Check if backend is running on port 5000
 - Verify `VITE_API_BASE_URL` in frontend (defaults to http://localhost:5000)
-- Check CORS settings in backend (should allow http://localhost:5173)
+- Check CORS settings in backend (should allow http://localhost:3000)
 - Check browser console for CORS errors
+- Ensure credentials are being sent with requests
 
 ### Session not persisting
 - Clear browser cookies
@@ -327,7 +385,9 @@ npm run dev  # Auto-reload with nodemon
 ### Frontend Development
 ```bash
 cd frontend
-npm run dev  # Vite dev server on port 5173
+npm run dev  # Vite dev server on port 3000
+npm run build  # Build for production
+npm run preview  # Preview production build
 ```
 
 ## 🌐 Production Deployment
@@ -352,7 +412,6 @@ npm run dev  # Vite dev server on port 5173
 - [ ] Search and filter functionality
 - [ ] Tags and categories for notes
 - [ ] Rich text editor for notes
-- [ ] Two-factor authentication
 - [ ] Password sharing (encrypted)
 - [ ] Export/Import data
 - [ ] Dark mode
